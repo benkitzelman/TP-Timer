@@ -1,5 +1,9 @@
 var service = process.env.SERVICE || 'Air';
 var path    = process.env.REQUEST || './requestBody.xml'
+var auth = {
+  uUser: 'XXXXXXXX',
+  uPass: 'XXXXXXXX'
+};
 
 var url = 'https://apac.copy-webservices.travelport.com/B2BGateway/connect/uAPI/' + service + 'Service';
 
@@ -7,11 +11,6 @@ var https = require('https'),
     request = require('request'),
     fs = require('fs'),
     Tracker = require('./tracker');
-
-var auth = {
-  uUser: 'Universal API/uAPI9149006438-eb985bc2',
-  uPass: 'wJ%6{d3A9?'
-};
 
 var tracker = new Tracker();
 
