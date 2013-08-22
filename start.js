@@ -1,3 +1,8 @@
+var service = process.env.SERVICE || 'Air';
+var path    = process.env.REQUEST || './requestBody.xml'
+
+var url = 'https://apac.copy-webservices.travelport.com/B2BGateway/connect/uAPI/' + service + 'Service';
+
 var https = require('https'),
     request = require('request'),
     fs = require('fs'),
@@ -45,7 +50,6 @@ var postMessageTo = function(url) {
   });
 };
 
-var service = process.env.SERVICE || 'Air';
-var url = 'https://apac.copy-webservices.travelport.com/B2BGateway/connect/uAPI/' + service + 'Service';
+
 console.log('\n\nTP TIMER =============== \n\nSending ./requestBody.xml to ' + url + '\n\n');
 postMessageTo(url);
