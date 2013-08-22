@@ -34,8 +34,9 @@ module.exports = function() {
     return this.totalTime() / this.requests.length;
   };
 
-  this.report = function() {
-    var msg = this.errors() + " of " + this.requests.length + " have failed ";
+  this.report = function(additionalMessage) {
+    var msg = additionalMessage || "";
+    msg += " - " + this.errors() + " of " + this.requests.length + " have failed ";
     msg += " - Total time (s): " + this.totalTime();
     msg += " - Avg time (s): " + this.avgTime();
 

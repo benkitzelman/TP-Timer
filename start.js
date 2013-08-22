@@ -3,14 +3,14 @@ var path    = process.env.REQUEST || './requestBody.xml'
 
 var url = 'https://apac.copy-webservices.travelport.com/B2BGateway/connect/uAPI/' + service + 'Service';
 
-var https = require('https'),
+var https   = require('https'),
     request = require('request'),
-    fs = require('fs'),
+    fs      = require('fs'),
     Tracker = require('./tracker');
 
 var auth = {
-  uUser: 'Universal API/uAPI9149006438-eb985bc2',
-  uPass: 'wJ%6{d3A9?'
+  uUser: '',
+  uPass: ''
 };
 
 var tracker = new Tracker();
@@ -43,7 +43,7 @@ var postMessageTo = function(url) {
   tracker.start();
   request.post(requestParamsFor(url), function(err, resp) {
     tracker.stop(resp.statusCode == 200);
-    tracker.report();
+    tracker.report(path);
     writeResponse(resp);
     postMessageTo(url);
   });
