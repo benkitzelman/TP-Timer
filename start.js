@@ -16,7 +16,6 @@ var auth = {
 var tracker = new Tracker();
 
 var getBody = function() {
-  var path = process.env.REQUEST || './requestBody.xml'
   return fs.readFileSync(path, 'ascii');
 };
 
@@ -51,5 +50,5 @@ var postMessageTo = function(url) {
 };
 
 
-console.log('\n\nTP TIMER =============== \n\nSending ./requestBody.xml to ' + url + '\n\n');
+console.log('\n\nTP TIMER =============== \n\nSending ' + path + ' to ' + url + '\n\n');
 postMessageTo(url);
