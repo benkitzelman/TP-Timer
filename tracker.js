@@ -22,6 +22,11 @@ module.exports = function() {
     return count;
   };
 
+  this.lastRequestTime = function() {
+    var lastReq = this.requests[this.requests.length - 1];
+    return (lastReq.finishedAt - lastReq.sentAt) / 1000;
+  };
+
   this.totalTime = function () {
     var time = 0;
     this.requests.forEach(function(req){
@@ -38,6 +43,7 @@ module.exports = function() {
     var msg = additionalMessage || "";
     msg += " - " + this.errors() + " of " + this.requests.length + " have failed ";
     msg += " - Total time (s): " + this.totalTime();
+    msg += " - Last Request (s): " + this.lastRequestTime();
     msg += " - Avg time (s): " + this.avgTime();
 
     console.log(msg);
