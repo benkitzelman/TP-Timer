@@ -1,0 +1,17 @@
+{
+  "name": "tptimer",
+  "title": "TPTimer",
+  "description": "A way to quantify how much time we waste waiting for TP pre prod to return requests",
+  "author": {
+    "name": "Locomote IP Pty Ltd",
+    "email": "devs@locomote.com.au",
+    "url": "http://www.locomote.com.au"
+  },
+  "version": "0.0.1",
+  "engines": {
+    "node": ">= 0.8.6"
+  },
+  "dependencies": {
+    "request": "*"
+  }
+}
