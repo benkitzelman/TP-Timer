@@ -6,4 +6,4 @@ A Request timer Travelport endpoints
 Usage
 =====
 
-$ SERVICE=Hotel REQUEST=/path/to/req_body.xml node start.js
+$ CRED_FILE=relative_path SERVICE=Hotel REQUEST=/path/to/req_body.xml node start.js

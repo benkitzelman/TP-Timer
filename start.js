@@ -1,28 +1,30 @@
-var service = process.env.SERVICE || 'Air';
-var path    = process.env.REQUEST || './requestBody.xml'
-
-var url = 'https://apac.copy-webservices.travelport.com/B2BGateway/connect/uAPI/' + service + 'Service';
+var service = process.env.SERVICE   || 'Air';
+var path    = process.env.REQUEST   || './requestBody.xml'
+var creds   = process.env.CRED_FILE || './creds/copy'
+var auth    = require(creds)
+var url     = process.env.URL || auth.baseUrl + service + 'Service';
 
 var https   = require('https'),
     request = require('request'),
     fs      = require('fs'),
     Tracker = require('./tracker');
 
-var auth = {
-  uUser: '',
-  uPass: ''
-};
-
 var tracker = new Tracker();
 
 var getBody = function() {
-  return fs.readFileSync(path, 'ascii');
+  var body = fs.readFileSync(path, 'ascii');
+  return body.replace(/(TargetBranch=")[^"]*(")/, "$1" + auth.branchCode + "$2");
 };
 
-var writeResponse = function(resp) {
-  fs.writeFileSync("./lastResponse.xml", resp.body + "\n");
+var writeMessaging = function(reqParams, resp) {
+  var dir = './messaging';
+
+  if(!fs.existsSync(dir)) fs.mkdirSync(dir);
+
+  fs.writeFileSync(dir + "/lastRequest.xml",  reqParams.body + "\n");
+  fs.writeFileSync(dir + "/lastResponse.xml", resp.body + "\n");
   if(resp.statusCode != 200)
-    fs.writeFileSync("./lastError.xml", resp.body + "\n");
+    fs.writeFileSync(dir + "/lastError.xml", resp.body + "\n");
 };
 
 var requestParamsFor = function(url) {
@@ -40,11 +42,13 @@ var requestParamsFor = function(url) {
 };
 
 var postMessageTo = function(url) {
+  var params = requestParamsFor(url);
+
   tracker.start();
-  request.post(requestParamsFor(url), function(err, resp) {
+  request.post(params, function(err, resp) {
     tracker.stop(resp.statusCode == 200);
     tracker.report(path);
-    writeResponse(resp);
+    writeMessaging(params, resp);
     postMessageTo(url);
   });
 };
