@@ -3,6 +3,13 @@ TP-Timer
 
 A Request timer Travelport endpoints
 
+Installation
+============
+
+```
+npm install
+```
+
 Usage
 =====
 
